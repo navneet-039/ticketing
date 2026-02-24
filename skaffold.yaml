@@ -1,0 +1,62 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+
+build:
+  local:
+    push: false
+  artifacts:
+    - image: nav019/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: src
+    - image: nav019/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: nav019/ticket
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: src
+    - image: nav019/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: src
+    - image: nav019/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: src
+    - image: nav019/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: src
+      
+manifests:
+  rawYaml:
+    - infra/k8s/*
+
+deploy:
+  kubectl: {}
